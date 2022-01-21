@@ -79,7 +79,7 @@ module.exports = async options => {
   ganacheOptions.network_id = sanitizeNetworkID(ganacheOptions.network_id);
 
   const { started } = await Develop.connectOrStart(ipcOptions, ganacheOptions);
-  const url = `http://${ganacheOptions.host}:${ganacheOptions.port}/`;
+  const url = `ws://${ganacheOptions.host}:${ganacheOptions.port}/`;
 
   if (started) {
     config.logger.log(`Truffle Develop started at ${url}`);
