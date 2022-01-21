@@ -51,7 +51,10 @@ module.exports = async options => {
     mnemonic,
     gasLimit: customConfig.gas || 0x6691b7,
     gasPrice: customConfig.gasPrice || 0x77359400,
-    time: config.genesis_time
+    time: config.genesis_time,
+    miner: {
+      instamine: "strict"
+    }
   };
 
   if (customConfig.hardfork !== null && customConfig.hardfork !== undefined) {
