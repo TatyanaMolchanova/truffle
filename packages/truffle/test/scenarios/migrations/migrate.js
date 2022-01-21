@@ -7,7 +7,7 @@ const Reporter = require("../reporter");
 const sandbox = require("../sandbox");
 const Web3 = require("web3");
 
-describe("migrate (success)", function() {
+describe("migrate (success)", function () {
   let config;
   let web3;
   let networkId;
@@ -17,7 +17,7 @@ describe("migrate (success)", function() {
   before(done => Server.start(done));
   after(done => Server.stop(done));
 
-  before(async function() {
+  before(async function () {
     this.timeout(10000);
     config = await sandbox.create(project);
     config.network = "development";
@@ -26,14 +26,14 @@ describe("migrate (success)", function() {
       reporter: new Reporter(logger)
     };
 
-    const provider = new Web3.providers.HttpProvider("http://localhost:8545", {
-      keepAlive: false
-    });
+    const provider = new Web3.providers.WebsocketProvider(
+      "ws://localhost:8545"
+    );
     web3 = new Web3(provider);
     networkId = await web3.eth.net.getId();
   });
 
-  it("runs migrations (sync & async/await)", async function() {
+  it("runs migrations (sync & async/await)", async function () {
     this.timeout(70000);
 
     await CommandRunner.run("migrate", config);
@@ -62,7 +62,7 @@ describe("migrate (success)", function() {
     console.log(output);
   });
 
-  it("forces a migration with the -f option", async function() {
+  it("forces a migration with the -f option", async function () {
     this.timeout(70000);
 
     await CommandRunner.run("migrate -f 3", config);
